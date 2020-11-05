@@ -1,31 +1,40 @@
-import { uuid } from 'uuidv4';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import Category from './Category';
 
-export enum TransactionType {
-  'income',
-  'outcome',
-}
-
+@Entity('transactions')
 class Transaction {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   title: string;
 
+  @Column()
+  type: 'income' | 'outcome';
+
+  @Column('decimal')
   value: number;
 
-  type: string;
+  @ManyToOne(() => Category)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 
+  @Column()
   category_id?: string;
 
+  @CreateDateColumn()
   created_at?: Date;
 
+  @UpdateDateColumn()
   updated_at?: Date;
-
-  constructor({ title, value, type }: Omit<Transaction, 'id'>) {
-    this.id = uuid();
-    this.title = title;
-    this.value = value;
-    this.type = type;
-  }
 }
 
 export default Transaction;

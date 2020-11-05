@@ -1,13 +1,8 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-// enum TransactionType {
-//   income = 'income',
-//   outcome = 'outcome',
-// }
-
-export default class CreateTransactionsTable1604351213893
+export default class CreateCategories1604533998276
   implements MigrationInterface {
-  private table = 'transactions';
+  private table = 'categories';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
@@ -26,24 +21,6 @@ export default class CreateTransactionsTable1604351213893
           {
             name: 'title',
             type: 'varchar',
-            isNullable: false,
-          },
-          // {
-          //   name: 'type',
-          //   type: 'varchar',
-          //   enum: [TransactionType.income, TransactionType.outcome],
-          //   isNullable: false,
-          // },
-          {
-            name: 'type',
-            type: 'varchar',
-            isNullable: false,
-          },
-          {
-            name: 'value',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
           },
           {
             name: 'created_at',
