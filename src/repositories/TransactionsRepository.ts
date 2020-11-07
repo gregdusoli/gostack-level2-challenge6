@@ -14,7 +14,9 @@ interface AllTransactionsDto {
 
 @EntityRepository(Transaction)
 class TransactionsRepository extends Repository<Transaction> {
-  public async getBalance(transactions: Transaction[]): Promise<Balance> {
+  public async getBalance(): Promise<Balance> {
+    const transactions = await this.find();
+
     const sumerise = (type: string): number => {
       return transactions
         .map(el => (el.type === type ? Number(el.value) : 0))
@@ -30,10 +32,11 @@ class TransactionsRepository extends Repository<Transaction> {
 
   public async all(): Promise<AllTransactionsDto> {
     const transactions = await this.find();
+    const balance = await this.getBalance();
 
     return {
+      balance,
       transactions,
-      balance: await this.getBalance(transactions),
     };
   }
 }

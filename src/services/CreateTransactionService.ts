@@ -21,11 +21,10 @@ class CreateTransactionService {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
     const categoryRepository = getRepository(Category);
 
-    const transactions = await transactionsRepository.find();
-    const { total } = await transactionsRepository.getBalance(transactions);
+    const { total } = await transactionsRepository.getBalance();
 
     if (type === 'outcome' && value > total) {
-      throw new AppError('insufficient funds');
+      throw new AppError('Insuficient funds');
     }
 
     let transactionCategory = await categoryRepository.findOne({
