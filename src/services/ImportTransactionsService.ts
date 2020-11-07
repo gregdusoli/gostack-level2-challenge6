@@ -65,7 +65,7 @@ class ImportTransactionsService {
 
     await transactionsRepository.save(importedTransactions);
 
-    // await fs.promises.unlink(filePath);
+    await fs.promises.unlink(filePath);
 
     return { newCategories, importedTransactions };
   }
